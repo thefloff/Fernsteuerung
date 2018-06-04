@@ -1,0 +1,11 @@
+<Bindings>
+    <Binding name="FS_PRIMARY" header="FS_HEADER">
+        fs.primaryAction();
+    </Binding>
+    <Binding name="FS_SECONDARY">
+        fs.secondaryAction();
+    </Binding>
+    <Binding name="FS_TERTIARY">
+        fs.tertiaryAction();
+    </Binding>
+</Bindings>

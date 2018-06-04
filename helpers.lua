@@ -1,3 +1,10 @@
+-- change player to support
+function fs.setPlayerName(name)
+	fs.playerControlled = name;
+	playerControlled = name;
+	getglobal("ChatFrame1"):AddMessage("Player: "..name);
+end
+
 -- use item in bag
 function fs.useItem(name)
 	local nrItems = {};
@@ -82,6 +89,7 @@ function fs.getItemNames()
 	end
 end
 
+-- return true if group in combat
 function fs.groupInCombat()
 	if(UnitAffectingCombat("player") ~= nil) then
 		return true;
@@ -114,22 +122,7 @@ function fs.targetHasDebuff(debuffname)
 	return false;
 end
 
-function fs.setAllowed()
-	local mark = GetRaidTargetIndex("target");
-	if mark then
-		fs.isAllowed[mark] = true;
-		getglobal("ChatFrame1"):AddMessage("Mark '"..fs.markerNames[mark].."' is now allowed");
-	end
-end
-
-function fs.setDisallowed()
-	local mark = GetRaidTargetIndex("target");
-	if mark then
-		fs.isAllowed[mark] = false;
-		getglobal("ChatFrame1"):AddMessage("Mark '"..fs.markerNames[mark].."' is now forbidden");
-	end
-end
-
+-- search for a target without any buff in the array
 function fs.selectNextTargetWithout(forbiddenBuffs)
 	local found = 0;
 	local counter = 1;
@@ -184,9 +177,14 @@ function fs.selectNextTargetWithout(forbiddenBuffs)
     end
 end
 
+-- print message to chat if fs.debug is set to true
 function fs.printDebug(msg)
 	if fs.debug then
-		-- SendChatMessage(msg, "WHISPER", nil, fs.playerControlled);
         getglobal("ChatFrame1"):AddMessage(msg);
 	end
+end
+
+-- print error message to chat
+function fs.printError(msg)
+	getglobal("ChatFrame1"):AddMessage("\124cffFF0000"..msg);
 end

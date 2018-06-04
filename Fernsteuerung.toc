@@ -1,11 +1,16 @@
 ## Interface: 20000
 ## Title-deDE: Fernsteuerung
 ## Author: Floff
-## Version: 1.0
+## Version: 1.1
+## SavedVariablesPerCharacter: playerControlled
 
 global_vars.lua
 helpers.lua
-actions.lua
-Core.lua
+
+warlock\warlock_vars.lua
+warlock\warlock_actions.lua
+warlock\warlock_main.lua
+
+Fernsteuerung.lua
 
 Fernsteuerung.xml
