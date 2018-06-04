@@ -1,0 +1,11 @@
+## Interface: 20000
+## Title-deDE: Fernsteuerung
+## Author: Floff
+## Version: 1.0
+
+global_vars.lua
+helpers.lua
+actions.lua
+Core.lua
+
+Fernsteuerung.xml
