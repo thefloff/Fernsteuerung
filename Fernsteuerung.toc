@@ -2,6 +2,7 @@
 ## Title-deDE: Fernsteuerung
 ## Author: Floff
 ## Version: 1.1
+## Dependencies: MobInfo2
 ## SavedVariablesPerCharacter: playerControlled
 
 global_vars.lua
