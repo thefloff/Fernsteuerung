@@ -1,0 +1,65 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+
+    <Script file="panel_global.lua"/>
+
+    <Frame name="FernsteuerungOptionsGlobal" inherits="FernsteuerungOptionsPanel" virtual="true">
+        <Frames>
+
+            <EditBox name="$parentPlayerNameBox" autoFocus="false">
+                <Size x="200" y="24"/>
+
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset x="12" y="0"/>
+                    </Anchor>
+                </Anchors>
+
+                <Layers>
+                    <Layer level ="BACKGROUND">
+                        <Texture setAllPoints="true">
+                            <Color r="0.2" g="0.2" b="0.4" a="0.7"/>
+                        </Texture>
+                    </Layer>
+                </Layers>
+
+                <Scripts>
+                    <OnShow>
+                        fs.playerControlled = playerControlled;
+                        this:SetText(fs.playerControlled);
+                    </OnShow>
+                    <OnTextChanged>
+                        fs_menu.global.playerNameChanged(this:GetText());
+                    </OnTextChanged>
+                    <OnEscapePressed>
+                        this:ClearFocus();
+                    </OnEscapePressed>
+                </Scripts>
+                <FontString font="GameFontNormal"/>
+            </EditBox>
+
+            <CheckButton name="$parentDebug" inherits="FernsteuerungCheckButtonTemplate" text="Enable Debug Messages">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parentPlayerNameBox" relativePoint="BOTTOMLEFT">
+                        <Offset x="4" y="-4"/>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                            fs_menu.global.setDebugMode(this:GetChecked());
+                    </OnClick>
+                </Scripts>
+            </CheckButton>
+
+        </Frames>
+        <Scripts>
+            <OnLoad>
+                    fs_menu.global.onLoad();
+            </OnLoad>
+            <OnShow>
+                    fs_menu.global.onShow();
+            </OnShow>
+        </Scripts>
+    </Frame>
+</Ui>

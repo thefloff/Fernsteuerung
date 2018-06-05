@@ -3,7 +3,7 @@
 ## Author: Floff
 ## Version: 1.1
 ## Dependencies: MobInfo2
-## SavedVariablesPerCharacter: playerControlled
+## SavedVariablesPerCharacter: playerControlled, debug
 
 global_vars.lua
 helpers.lua
@@ -15,3 +15,7 @@ warlock\warlock_main.lua
 Fernsteuerung.lua
 
 Fernsteuerung.xml
+
+menu\menu_vars.lua
+menu\templates.xml
+menu\menu.xml

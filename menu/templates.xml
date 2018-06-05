@@ -1,0 +1,109 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+
+    <CheckButton name="FernsteuerungCheckButtonTemplate" virtual="true">
+        <Size x="32" y="32"/>
+
+        <ButtonText name="$parentText">
+            <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT">
+                    <Offset x="-2" y="0"/>
+                </Anchor>
+            </Anchors>
+        </ButtonText>
+
+        <NormalFont font="GameFontNormalSmall"/>
+        <DisabledFont font="GameFontDisableSmall"/>
+        <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
+        <PushedTexture file="Interface\Buttons\UI-CheckBox-Down"/>
+        <HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
+        <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
+        <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
+    </CheckButton>
+
+	<Frame name="FernsteuerungOptionsPanel" hidden="true" virtual="true">
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="4" y="-32"/>
+			</Anchor>
+			<Anchor point="BOTTOMRIGHT">
+				<Offset x="-4" y="4"/>
+			</Anchor>
+		</Anchors>
+	</Frame>
+	
+	<Frame name="FernsteuerungOptionsDropDown" inherits="UIDropDownMenuTemplate" enableMouse="true" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<FontString name="$parentLabel" font="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT">
+							<Offset x="-12" y="0"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+
+    <Slider name="FernsteuerungSlider" inherits="OptionsSliderTemplate" virtual="true">
+        <Size x="200" y="18"/>
+
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString name="$parentValText" font="GameFontNormalSmall">
+                    <Anchors>
+                        <Anchor point="BOTTOM">
+                            <Offset x="0" y="-6"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Slider>
+	
+	<Slider name="FernsteuerungOptionsSlider" inherits="FernsteuerungSlider" virtual="true">
+		<Size x="214" y="18"/>
+	</Slider>
+
+    <Button name="FernsteuerungRightClickMenu" parent="UIParent" frameStrata="DIALOG" clampedToScreen="true" enableMouse="true" toplevel="true" hidden="true" virtual="true">
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+            <EdgeSize>
+                <AbsValue val="16"/>
+            </EdgeSize>
+            <TileSize>
+                <AbsValue val="16"/>
+            </TileSize>
+            <BackgroundInsets>
+                <AbsInset left="4" right="4" top="4" bottom="4"/>
+            </BackgroundInsets>
+        </Backdrop>
+
+        <ButtonText name="$parentText">
+            <Anchors>
+                <Anchor point="TOP">
+                    <Offset x="0" y="-6"/>
+                </Anchor>
+            </Anchors>
+        </ButtonText>
+        <NormalFont font="GameFontHighlightLarge"/>
+
+        <Frames>
+            <Button name="$parentClose" inherits="UIPanelCloseButton">
+                <Anchors>
+                    <Anchor point="TOPRIGHT"/>
+                </Anchors>
+            </Button>
+        </Frames>
+
+        <Scripts>
+            <OnLoad>
+                    this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+            </OnLoad>
+            <OnClick>
+                    this:Hide();
+            </OnClick>
+        </Scripts>
+    </Button>
+</Ui>

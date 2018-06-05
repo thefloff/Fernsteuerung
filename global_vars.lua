@@ -5,13 +5,14 @@ BINDING_HEADER_FS_HEADER = "Fernsteuerung";
 BINDING_NAME_FS_PRIMARY = "Do Primary Action";
 BINDING_NAME_FS_SECONDARY = "Do Secondary Action";
 BINDING_NAME_FS_TERTIARY = "Do Tertiary Action";
+BINDING_NAME_FS_MENU = "Show Menu";
 
 -- Icons relevant for all classes --
 fs.ico_drink = "Interface\\Icons\\INV_Drink_18";
 fs.ico_eat = "Interface\\Icons\\INV_Misc_Food_33";
 
 -- Characters --
-fs.playerControlled = "None";
+fs.playerControlled = "Insert Player Character Name here!";
 fs.characterClass = "None";
 
 -- Raid Targets --

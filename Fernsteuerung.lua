@@ -42,3 +42,10 @@ function fs.tertiaryAction()
     fs.printDebug("fs.tertiaryAction");
     fs.tertiaryActions[fs.characterClass]();
 end
+function fs.showMenu()
+    fs.printDebug("fs.showMenu");
+    if FSOptions then
+        fs.printDebug("FSOptions exists");
+        FSOptions:Show();
+    end
+end

@@ -8,4 +8,7 @@
     <Binding name="FS_TERTIARY">
         fs.tertiaryAction();
     </Binding>
+    <Binding name="FS_MENU">
+        fs.showMenu();
+    </Binding>
 </Bindings>

@@ -1,8 +1,8 @@
 -- change player to support
 function fs.setPlayerName(name)
+    fs.printDebug("setPlayerName("..name..")");
 	fs.playerControlled = name;
 	playerControlled = name;
-	getglobal("ChatFrame1"):AddMessage("Player: "..name);
 end
 
 -- use item in bag
@@ -179,6 +179,7 @@ end
 
 -- print message to chat if fs.debug is set to true
 function fs.printDebug(msg)
+    fs.debug = debug;
 	if fs.debug then
         getglobal("ChatFrame1"):AddMessage(msg);
 	end
