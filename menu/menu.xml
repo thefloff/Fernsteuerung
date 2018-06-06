@@ -3,6 +3,7 @@
 	xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
 	
 	<Include file="panels\panel_global.xml"/>
+	<Include file="panels\panel_warlock.xml"/>
 	
 	<Script file="menu.lua"/>
 	
@@ -39,6 +40,20 @@
 				<Scripts>
 					<OnClick>
 						fs_menu.switchTab("Global");
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+
+			<CheckButton name="$parentWarlock" inherits="FSOptionsTabButton" text="Warlock">
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset x="-8" y="-20"/>
+					</Anchor>
+				</Anchors>
+
+				<Scripts>
+					<OnClick>
+							fs_menu.switchTab("Warlock");
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -102,6 +117,7 @@
 				
 				<Frames>
 					<Frame name="$parentGlobal" inherits="FernsteuerungOptionsGlobal"/>
+					<Frame name="$parentWarlock" inherits="FernsteuerungOptionsWarlock"/>
 				</Frames>
 			</Frame>
 		</Frames>

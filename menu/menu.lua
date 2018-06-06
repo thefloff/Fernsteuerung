@@ -16,6 +16,7 @@ function fs_menu.onShow()
 end
 
 function fs_menu.switchTab(newFrameName)
+	fs.printDebug("switchTab("..newFrameName..")");
 	if newFrameName ~= currentFrameName and getglobal("FSOptionsPanel" .. newFrameName) then
 		this:LockHighlight();
 		getglobal("FSOptionsMenu" .. currentFrameName):UnlockHighlight();
