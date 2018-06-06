@@ -1,0 +1,21 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+
+    <Script file="panel_priest.lua"/>
+
+    <Frame name="FernsteuerungOptionsPriest" inherits="FernsteuerungOptionsPanel" virtual="true">
+        <Frames>
+.
+
+        </Frames>
+        <Scripts>
+            <OnLoad>
+                    fs_menu.priest.onLoad();
+            </OnLoad>
+            <OnShow>
+                    fs_menu.priest.onShow();
+            </OnShow>
+        </Scripts>
+    </Frame>
+</Ui>...

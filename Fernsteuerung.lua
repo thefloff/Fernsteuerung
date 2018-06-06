@@ -3,16 +3,22 @@
 fs.primaryActions = {
     ["Hexenmeister"] = warlock.primaryAction,
     ["Warlock"] = warlock.primaryAction,
+    ["Priester"] = priest.primaryAction,
+    ["Priest"] = priest.primaryAction,
     ["None"] = function() fs.printError("ERROR: character class not found!"); end
 }
 fs.secondaryActions = {
     ["Hexenmeister"] = warlock.secondaryAction,
-    ["Warlock"] = warlock.secondaryAct,
+    ["Warlock"] = warlock.secondaryAction,
+    ["Priester"] = priest.secondaryAction,
+    ["Priest"] = priest.secondaryAction,
     ["None"] = function() fs.printError("ERROR: character class not found!"); end
 }
 fs.tertiaryActions = {
     ["Hexenmeister"] = warlock.tertiaryAction,
     ["Warlock"] = warlock.tertiaryAction,
+    ["Priester"] = priest.tertiaryAction,
+    ["Priest"] = priest.tertiaryAction,
     ["None"] = function() fs.printError("ERROR: character class not found!"); end
 }
 

@@ -12,6 +12,9 @@ warlock\warlock_vars.lua
 warlock\warlock_actions.lua
 warlock\warlock_main.lua
 
+priest\priest_vars.lua
+priest\priest_main.lua
+
 Fernsteuerung.lua
 
 Fernsteuerung.xml

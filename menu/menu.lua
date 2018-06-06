@@ -9,7 +9,6 @@ function fs_menu.onShow()
 	fs.printDebug("fs_menu.onShow");
 	local currentFrame = getglobal("FSOptionsPanel" .. currentFrameName);
 	if not currentFrame:IsShown() then
-		fs.printDebug("FSOptionsPanel<active> not shown");
 		currentFrame:Show()
 		getglobal("FSOptionsMenu" .. currentFrameName):LockHighlight();
 	end

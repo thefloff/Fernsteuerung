@@ -57,6 +57,20 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
+
+			<CheckButton name="$parentPriest" inherits="FSOptionsTabButton" text="Priest">
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset x="-8" y="-36"/>
+					</Anchor>
+				</Anchors>
+
+				<Scripts>
+					<OnClick>
+							fs_menu.switchTab("Priest");
+					</OnClick>
+				</Scripts>
+			</CheckButton>
 		</Frames>
 	</Frame>
 
@@ -118,6 +132,7 @@
 				<Frames>
 					<Frame name="$parentGlobal" inherits="FernsteuerungOptionsGlobal"/>
 					<Frame name="$parentWarlock" inherits="FernsteuerungOptionsWarlock"/>
+					<Frame name="$parentPriest" inherits="FernsteuerungOptionsPriest"/>.
 				</Frames>
 			</Frame>
 		</Frames>
