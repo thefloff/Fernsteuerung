@@ -186,7 +186,7 @@ function warlock.select_target_not_forbidden()
 		fs.printDebug(" -- target is good");
 		return false;
 	end
-	return fs.selectNextTargetWithout();
+	return fs.selectNextTargetWithout({warlock.debuff_sheep}, warlock.forbiddenMarks);
 end
 function warlock.select_target_dot_inst()
 	fs.printDebug("Selecting next target for instant dots");
@@ -247,11 +247,11 @@ function warlock.select_target_dot_inst()
 end
 function warlock.select_target_dot_cast()
 	fs.printDebug("Selecting next target for cast dots");
-	return fs.selectNextTargetWithout({warlock.dot_feuerbrand})
+	return fs.selectNextTargetWithout({warlock.dot_feuerbrand, warlock.debuff_sheep}, warlock.forbiddenMarks)
 end
 function warlock.select_target_damage()
 	fs.printDebug("Selecting next target for cast damage");
-	return fs.selectNextTargetWithout();
+	return fs.selectNextTargetWithout({warlock.debuff_sheep}, warlock.forbiddenMarks);
 end
 
 
@@ -338,6 +338,13 @@ function warlock.setAllowed()
 		warlock.isAllowed[mark] = true;
 		getglobal("ChatFrame1"):AddMessage("Mark '"..fs.markerNames[mark].."' is now allowed");
 	end
+
+	warlock.forbiddenMarks = {};
+	for i,v in ipairs(warlock.isAllowed) do
+		if not warlock.isAllowed[v] then
+			table.insert(warlock.forbiddenMarks, v);
+		end
+	end
 end
 
 function warlock.setDisallowed()
@@ -345,5 +352,12 @@ function warlock.setDisallowed()
 	if mark then
 		warlock.isAllowed[mark] = false;
 		getglobal("ChatFrame1"):AddMessage("Mark '"..fs.markerNames[mark].."' is now forbidden");
+	end
+
+	warlock.forbiddenMarks = {};
+	for i,v in ipairs(warlock.isAllowed) do
+		if not warlock.isAllowed[v] then
+			table.insert(warlock.forbiddenMarks, v);
+		end
 	end
 end

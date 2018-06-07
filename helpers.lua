@@ -123,7 +123,7 @@ function fs.targetHasDebuff(debuffname)
 end
 
 -- search for a target without any buff in the array
-function fs.selectNextTargetWithout(forbiddenBuffs)
+function fs.selectNextTargetWithout(forbiddenBuffs, forbiddenMarks)
 	local found = 0;
 	local counter = 1;
     local tookToLong = false;
@@ -151,17 +151,17 @@ function fs.selectNextTargetWithout(forbiddenBuffs)
 				end
             else
                 tookToLong = true;
-            end
-
-			if fs.targetHasDebuff(fs.debuff_sheep) then
-                fs.printDebug(" -- sheep present");
-				found = 0;
 			end
 
 			local mark = GetRaidTargetIndex("target");
-			if mark and not fs.isAllowed[mark] then
-                fs.printDebug(" -- illegal mark present");
-				found = 0;
+			if not (forbiddenMarks == nil) and mark then
+				for i,v in ipairs(forbiddenBuffs) do
+					fs.printDebug(" -- checking forbidden mark: " .. v);
+					if mark == v then
+						fs.printDebug(" -- mark is present");
+						found = 0;
+					end
+				end
 			end
 
 		end
