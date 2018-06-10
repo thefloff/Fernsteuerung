@@ -50,3 +50,5 @@ warlock.isAllowed = {
     [fs.circle] = false,
     [fs.star] = false
 }
+
+warlock.forbiddenMarks = {fs.cross, fs.square, fs.moon, fs.triangle, fs.purple, fs.circle, fs.start};
