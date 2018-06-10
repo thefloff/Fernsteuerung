@@ -5,8 +5,14 @@
 ## Dependencies: MobInfo2
 ## SavedVariablesPerCharacter: playerControlled, debug
 
+libs\ParserLib-1.1\ParserLib.lua
+libs\ParserLib-1.1\optimizer-enUS.lua
+
 global_vars.lua
 helpers.lua
+
+heal\heal_vars.lua
+heal\heal_main.lua
 
 warlock\warlock_vars.lua
 warlock\warlock_actions.lua
@@ -14,6 +20,12 @@ warlock\warlock_main.lua
 
 priest\priest_vars.lua
 priest\priest_main.lua
+
+paladin\paladin_vars.lua
+paladin\paladin_main.lua
+
+druide\druide_vars.lua
+druide\druide_main.lua
 
 Fernsteuerung.lua
 

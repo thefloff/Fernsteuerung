@@ -1,4 +1,4 @@
-priest = {
+paladin = {
 	["healSpells"] = {
 		["DummySpellNameRank1"] = {
 			["name"] = "DummySpellName(Rank 1)",

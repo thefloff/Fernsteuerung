@@ -20,7 +20,7 @@
 				fs.load();
 			</OnLoad>
 			<OnEvent>
-				Fernsteuerung_Event();
+				fs.chatMessageEvent() 
 			</OnEvent>
 		</Scripts>
 
