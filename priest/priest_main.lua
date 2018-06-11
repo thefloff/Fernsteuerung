@@ -1,12 +1,12 @@
 
-function priest.primaryAction()
+function fs.priest.primaryAction()
     fs.printDebug("priest.primaryAction()");
 end
 
-function priest.secondaryAction()
+function fs.priest.secondaryAction()
     fs.printDebug("priest.secondaryAction()");
 end
 
-function priest.tertiaryAction()
+function fs.priest.tertiaryAction()
     fs.printDebug("priest.tertiaryAction()");
 end

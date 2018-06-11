@@ -1,46 +1,46 @@
-warlock = {};
+fs.warlock = {};
 
-warlock.lastElemBuff = 0;
+fs.warlock.lastElemBuff = 0;
 
-warlock.dot_fluchDerPein = "Interface\\Icons\\Spell_Shadow_CurseOfSargeras";
-warlock.dot_verderbnis = "Interface\\Icons\\Spell_Shadow_AbominationExplosion";
-warlock.dot_feuerbrand = "Interface\\Icons\\Spell_Fire_Immolation";
-warlock.dot_lebensentzug = "Interface\\Icons\\Spell_Shadow_Requiem";
-warlock.buff_daemonenruestung = "Interface\\Icons\\Spell_Shadow_RagingScream";
-warlock.debuff_sheep = "Interface\\Icons\\Spell_Nature_Polymorph";
-warlock.debuff_fde = "Interface\\Icons\\Spell_Shadow_ChillTouch";
-warlock.debuff_fear = "Interface\\Icons\\Spell_Shadow_Possession";
+fs.warlock.dot_fluchDerPein = "Interface\\Icons\\Spell_Shadow_CurseOfSargeras";
+fs.warlock.dot_verderbnis = "Interface\\Icons\\Spell_Shadow_AbominationExplosion";
+fs.warlock.dot_feuerbrand = "Interface\\Icons\\Spell_Fire_Immolation";
+fs.warlock.dot_lebensentzug = "Interface\\Icons\\Spell_Shadow_Requiem";
+fs.warlock.buff_daemonenruestung = "Interface\\Icons\\Spell_Shadow_RagingScream";
+fs.warlock.debuff_sheep = "Interface\\Icons\\Spell_Nature_Polymorph";
+fs.warlock.debuff_fde = "Interface\\Icons\\Spell_Shadow_ChillTouch";
+fs.warlock.debuff_fear = "Interface\\Icons\\Spell_Shadow_Possession";
 
-warlock.fluchDerPein = "Fluch der Pein";
-warlock.fluchVerstaerken = "Fluch verstärken";
-warlock.verderbnis = "Verderbnis";
-warlock.feuerbrand = "Feuerbrand";
-warlock.lebensentzug = "Lebensentzug";
-warlock.schattenblitz = "Schattenblitz";
-warlock.furcht = "Furcht";
-warlock.drainMana = "Mana entziehen";
-warlock.seelendieb = "Seelendieb";
-warlock.createHealthstone = "Gesundheitsstein herstellen";
-warlock.blutsauger = "Blutsauger";
-warlock.summonMount = "Teufelsross beschwören";
-warlock.summonImp = "Wichtel beschwören";
-warlock.daemonenruestung = "Dämonenrüstung";
-warlock.todesmantel = "Todesmantel";
-warlock.fluchDerElemente = "Fluch der Elemente";
-warlock.schattenbrand = "Schattenbrand";
-warlock.seelenfeuer = "Seelenfeuer";
+fs.warlock.fluchDerPein = "Fluch der Pein";
+fs.warlock.fluchVerstaerken = "Fluch verstärken";
+fs.warlock.verderbnis = "Verderbnis";
+fs.warlock.feuerbrand = "Feuerbrand";
+fs.warlock.lebensentzug = "Lebensentzug";
+fs.warlock.schattenblitz = "Schattenblitz";
+fs.warlock.furcht = "Furcht";
+fs.warlock.drainMana = "Mana entziehen";
+fs.warlock.seelendieb = "Seelendieb";
+fs.warlock.createHealthstone = "Gesundheitsstein herstellen";
+fs.warlock.blutsauger = "Blutsauger";
+fs.warlock.summonMount = "Teufelsross beschwören";
+fs.warlock.summonImp = "Wichtel beschwören";
+fs.warlock.daemonenruestung = "Dämonenrüstung";
+fs.warlock.todesmantel = "Todesmantel";
+fs.warlock.fluchDerElemente = "Fluch der Elemente";
+fs.warlock.schattenbrand = "Schattenbrand";
+fs.warlock.seelenfeuer = "Seelenfeuer";
 
-warlock.slt_feuerbrand = 1;
-warlock.slt_fluchVerstaerken = 5;
-warlock.slt_zauberstab = 61;
-warlock.slt_seelenfeuer = 64;
-warlock.slt_schattenbrand = 65;
-warlock.slt_todesmantel = 68;
+fs.warlock.slt_feuerbrand = 1;
+fs.warlock.slt_fluchVerstaerken = 5;
+fs.warlock.slt_zauberstab = 61;
+fs.warlock.slt_seelenfeuer = 64;
+fs.warlock.slt_schattenbrand = 65;
+fs.warlock.slt_todesmantel = 68;
 
-warlock.ico_healthstone = "Interface\\Icons\\INV_Stone_04";
-warlock.ico_seelensplitter = "Interface\\Icons\\INV_Misc_Gem_Amethyst_02";
+fs.warlock.ico_healthstone = "Interface\\Icons\\INV_Stone_04";
+fs.warlock.ico_seelensplitter = "Interface\\Icons\\INV_Misc_Gem_Amethyst_02";
 
-warlock.isAllowed = {
+fs.warlock.isAllowed = {
     [fs.skull] = true,
     [fs.cross] = false,
     [fs.square] = false,
@@ -51,4 +51,4 @@ warlock.isAllowed = {
     [fs.star] = false
 }
 
-warlock.forbiddenMarks = {fs.cross, fs.square, fs.moon, fs.triangle, fs.purple, fs.circle, fs.start};
+fs.warlock.forbiddenMarks = {fs.cross, fs.square, fs.moon, fs.triangle, fs.purple, fs.circle, fs.start};
