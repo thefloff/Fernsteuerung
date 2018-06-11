@@ -1,16 +1,17 @@
+
 function fs.warlock.checkHealthInCombat()
 	local health = UnitHealth("player") / UnitHealthMax("player");
 	if health < 0.3 then
-		if GetActionCooldown(fs.slt_todesmantel) == 0 then
-			CastSpellByName(fs.todesmantel);
+		if GetActionCooldown(fs.warlock.slt_todesmantel) == 0 then
+			CastSpellByName(fs.warlock.todesmantel);
 			return true;
-		elseif fs.findItem(fs.ico_healthstone) then
-			fs.useItem(fs.ico_healthstone);
+		elseif fs.findItem(fs.warlock.ico_healthstone) then
+			fs.useItem(fs.warlock.ico_healthstone);
 			return true;
 		elseif UnitCanAttack("player", "target") and
 				UnitAffectingCombat("target") and
 				IsActionInRange(1) == 1 then
-			CastSpellByName(fs.blutsauger);
+			CastSpellByName(fs.warlock.blutsauger);
 			return true;
 		else
 			FollowByName(fs.playerControlled);
@@ -30,22 +31,22 @@ function fs.warlock.elem_debuff()
 	end
 
 	local now = GetTime();
-	if now - fs.lastElemBuff < 5 then
+	if now - fs.warlock.lastElemBuff < 5 then
 		return false;
 	else
-		fs.lastElemBuff = now;
+		fs.warlock.lastElemBuff = now;
 	end
 
 	local result;
 	
 	AssistByName(fs.playerControlled);
-	if not fs.targetHasDebuff(fs.debuff_fde) and
-		not fs.targetHasDebuff(fs.debuff_sheep) then
+	if not fs.targetHasDebuff(fs.warlock.debuff_fde) and
+		not fs.targetHasDebuff(fs.warlock.debuff_sheep) then
 		local mark = GetRaidTargetIndex("target");
-		if mark and not fs.isAllowed[mark] then
+		if mark and not fs.warlock.isAllowed[mark] then
 			return false;
 		end
-		CastSpellByName(fs.fluchDerElemente);
+		CastSpellByName(fs.warlock.fluchDerElemente);
 		result = true;
 	end
 	result = false;
@@ -61,7 +62,7 @@ function fs.warlock.cast_seelendieb()
 	local enemyHealth = UnitHealth("target") / UnitHealthMax("target");
 	if enemyHealth < 0.2 then
 		fs.printDebug(" -- will cast Seelendieb");
-		CastSpellByName(fs.seelendieb);
+		CastSpellByName(fs.warlock.seelendieb);
 		return true;
 	end
 	return false;
@@ -72,9 +73,9 @@ function fs.warlock.instant_damage()
 	if mana < 0.1 then
 		return false;
 	end
-	local nrShards = fs.countItems(fs.ico_seelensplitter);
-	if nrShards > 5 and GetActionCooldown(fs.slt_schattenbrand) == 0 then
-		CastSpellByName(fs.schattenbrand);
+	local nrShards = fs.countItems(fs.warlock.ico_seelensplitter);
+	if nrShards > 5 and GetActionCooldown(fs.warlock.slt_schattenbrand) == 0 then
+		CastSpellByName(fs.warlock.schattenbrand);
 		return true;
 	end
 	return false;
@@ -97,29 +98,29 @@ end
 
 function fs.warlock.dot_inst()
 	local mana = UnitMana("player") / UnitManaMax("player");
-	if IsActionInRange(fs.slt_feuerbrand) == 1 then
+	if IsActionInRange(fs.warlock.slt_feuerbrand) == 1 then
 		fs.printDebug(" -- am in range, will dot!");
 		PetAttack();
 		-- dot
-		if not fs.targetHasDebuff(fs.dot_fluchDerPein)
-			and not fs.targetHasDebuff(fs.debuff_fde) then
+		if not fs.targetHasDebuff(fs.warlock.dot_fluchDerPein)
+			and not fs.targetHasDebuff(fs.warlock.debuff_fde) then
 			fs.printDebug(" -- Fluch der Pein");
-			if GetActionCooldown(fs.slt_fluchVerstaerken) == 0 then
+			if GetActionCooldown(fs.warlock.slt_fluchVerstaerken) == 0 then
 				fs.printDebug(" -- -- verstärken");
-				CastSpellByName(fs.fluchVerstaerken);
+				CastSpellByName(fs.warlock.fluchVerstaerken);
 				return true;
 			else
 				fs.printDebug(" -- -- casten");
-				CastSpellByName(fs.fluchDerPein);
+				CastSpellByName(fs.warlock.fluchDerPein);
 				return true;
 			end
-		elseif not fs.targetHasDebuff(fs.dot_verderbnis) then
+		elseif not fs.targetHasDebuff(fs.warlock.dot_verderbnis) then
 			fs.printDebug(" -- Verderbnis");
-			CastSpellByName(fs.verderbnis);
+			CastSpellByName(fs.warlock.verderbnis);
 			return true;
-		elseif mana > 0.5 and not fs.targetHasDebuff(fs.dot_lebensentzug) then
+		elseif mana > 0.5 and not fs.targetHasDebuff(fs.warlock.dot_lebensentzug) then
 			fs.printDebug(" -- Lebensentzug");
-			CastSpellByName(fs.lebensentzug);
+			CastSpellByName(fs.warlock.lebensentzug);
 			return true;
 		end
 		fs.printDebug(" -- all dots applied");
@@ -137,10 +138,10 @@ function fs.warlock.dot_cast()
 	if mana < 0.2 then
 		return false;
 	end
-	if IsActionInRange(fs.slt_feuerbrand) == 1 then
+	if IsActionInRange(fs.warlock.slt_feuerbrand) == 1 then
 		PetAttack();
-		if not fs.targetHasDebuff(fs.dot_feuerbrand) then
-			CastSpellByName(fs.feuerbrand);
+		if not fs.targetHasDebuff(fs.warlock.dot_feuerbrand) then
+			CastSpellByName(fs.warlock.feuerbrand);
 			return true;
 		end
 	else
@@ -340,7 +341,7 @@ function fs.warlock.setAllowed()
 	end
 
 	fs.warlock.forbiddenMarks = {};
-	for i,v in ipairs(fs.warlock.isAllowed) do
+	for _,v in ipairs(fs.warlock.isAllowed) do
 		if not fs.warlock.isAllowed[v] then
 			table.insert(fs.warlock.forbiddenMarks, v);
 		end
@@ -355,7 +356,7 @@ function fs.warlock.setDisallowed()
 	end
 
 	fs.warlock.forbiddenMarks = {};
-	for i,v in ipairs(fs.warlock.isAllowed) do
+	for _,v in ipairs(fs.warlock.isAllowed) do
 		if not fs.warlock.isAllowed[v] then
 			table.insert(fs.warlock.forbiddenMarks, v);
 		end
