@@ -1,4 +1,4 @@
-fs.druide = {
+fs.druid = {
 	["healSpells"] = {
 		["DummySpellNameRank1"] = {
 			["name"] = "DummySpellName(Rank 1)",

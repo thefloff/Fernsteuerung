@@ -221,3 +221,48 @@ function fs.getTableSize(t)
 	if t == nil then return 0; end;
 	return table.getn(t);
 end
+
+function fs.getNormalizedClassName(className) 
+	if(className == "Hexenmeister" or className == "Warlock") then
+		return "warlock";
+	elseif(className == "Priester" or className == "Priest") then
+		return "priest";
+	elseif(className == "Jäger" or className == "Hunter") then
+		return "hunter";
+	elseif(className == "Paladin") then
+		return "paladin";
+	elseif(className == "Druide" or className == "Druid") then
+		return "druid";
+	elseif(className == "Schurke" or className == "Rogue") then
+		return "rogue";		
+	elseif(className == "Krieger" or className == "Warrior") then
+		return "warrior";	
+	elseif(className == "Schamane" or className == "Shaman") then
+		return "shaman";			
+	elseif(className == "Magier" or className == "Mage") then
+		return "mage";
+	end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

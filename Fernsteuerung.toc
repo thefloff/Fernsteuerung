@@ -24,8 +24,8 @@ priest\priest_main.lua
 paladin\paladin_vars.lua
 paladin\paladin_main.lua
 
-druide\druide_vars.lua
-druide\druide_main.lua
+druid\druid_vars.lua
+druid\druid_main.lua
 
 Fernsteuerung.lua
 
