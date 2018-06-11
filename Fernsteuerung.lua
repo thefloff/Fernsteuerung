@@ -1,24 +1,24 @@
 
 -- define functions to call for different classes.
 fs.primaryActions = {
-    ["Hexenmeister"] = warlock.primaryAction,
-    ["Warlock"] = warlock.primaryAction,
-    ["Priester"] = priest.primaryAction,
-    ["Priest"] = priest.primaryAction,
+    ["Hexenmeister"] = fs.warlock.primaryAction,
+    ["Warlock"] = fs.warlock.primaryAction,
+    ["Priester"] = fs.priest.primaryAction,
+    ["Priest"] = fs.priest.primaryAction,
     ["None"] = function() fs.printError("ERROR: character class not found!"); end
 }
 fs.secondaryActions = {
-    ["Hexenmeister"] = warlock.secondaryAction,
-    ["Warlock"] = warlock.secondaryAction,
-    ["Priester"] = priest.secondaryAction,
-    ["Priest"] = priest.secondaryAction,
+    ["Hexenmeister"] = fs.warlock.secondaryAction,
+    ["Warlock"] = fs.warlock.secondaryAction,
+    ["Priester"] = fs.priest.secondaryAction,
+    ["Priest"] = fs.priest.secondaryAction,
     ["None"] = function() fs.printError("ERROR: character class not found!"); end
 }
 fs.tertiaryActions = {
-    ["Hexenmeister"] = warlock.tertiaryAction,
-    ["Warlock"] = warlock.tertiaryAction,
-    ["Priester"] = priest.tertiaryAction,
-    ["Priest"] = priest.tertiaryAction,
+    ["Hexenmeister"] = fs.warlock.tertiaryAction,
+    ["Warlock"] = fs.warlock.tertiaryAction,
+    ["Priester"] = fs.priest.tertiaryAction,
+    ["Priest"] = fs.priest.tertiaryAction,
     ["None"] = function() fs.printError("ERROR: character class not found!"); end
 }
 

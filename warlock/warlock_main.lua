@@ -1,5 +1,5 @@
 
-function warlock.primaryAction()
+function fs.warlock.primaryAction()
     fs.printDebug("warlock.primaryAction");
 
     local enemyHealth = UnitHealth("target") / UnitHealthMax("target");
@@ -15,43 +15,43 @@ function warlock.primaryAction()
         fs.printDebug("Will check health");
 
         -- heal if necessary
-        if warlock.checkHealthInCombat() then
+        if fs.warlock.checkHealthInCombat() then
             return;
         end
 
         fs.printDebug("Will apply elemental debuff");
 
         -- apply element debuff to mage target
-        if warlock.elem_debuff() then
+        if fs.warlock.elem_debuff() then
             return;
         end
 
         fs.printDebug("Will check if target forbidden");
 
         -- avoid forbidden marks
-        if warlock.select_target_not_forbidden() then
+        if fs.warlock.select_target_not_forbidden() then
             return;
         end
 
         fs.printDebug("Will check Seelendieb");
 
         -- low health target -> cast seelendieb
-        if warlock.cast_seelendieb() then
+        if fs.warlock.cast_seelendieb() then
             return;
         end
 
         fs.printDebug("Will do instant damage");
 
         -- instant damage
-        if warlock.instant_damage() then
+        if fs.warlock.instant_damage() then
             return;
         end
 
         fs.printDebug("Will cast instant dots");
 
         -- apply instant dots
-        if warlock.dots_relevant() then
-            if warlock.dot_inst() or warlock.select_target_dot_inst() then
+        if fs.warlock.dots_relevant() then
+            if fs.warlock.dot_inst() or fs.warlock.select_target_dot_inst() then
                 return;
             end
         else
@@ -61,14 +61,14 @@ function warlock.primaryAction()
         fs.printDebug("Will cast longer dots");
 
         -- apply cast dots
-        if warlock.dot_cast() or warlock.select_target_dot_cast() then
+        if fs.warlock.dot_cast() or fs.warlock.select_target_dot_cast() then
             return;
         end
 
         fs.printDebug("Will do damage");
 
         -- do damage
-        if warlock.do_damage() or warlock.select_target_damage() then
+        if fs.warlock.do_damage() or fs.warlock.select_target_damage() then
             return;
         end
 
@@ -79,22 +79,22 @@ function warlock.primaryAction()
         AssistByName(fs.playerControlled);
         -- if selected enemy
         if UnitCanAttack("player", "target") then
-            warlock.do_damage();
+            fs.warlock.do_damage();
         else
             -- else do peaceful action
-            warlock.doPrimaryOOCAction();
+            fs.warlock.doPrimaryOOCAction();
         end
     end
 end
 
-function warlock.secondaryAction()
+function fs.warlock.secondaryAction()
     fs.printDebug("warlock.secondaryAction");
 
     -- in combat fear
     if fs.groupInCombat() then
         AssistByName(fs.playerControlled);
-        if IsActionInRange(warlock.slt_feuerbrand) == 1 then
-            CastSpellByName(warlock.furcht);
+        if IsActionInRange(fs.warlock.slt_feuerbrand) == 1 then
+            CastSpellByName(fs.warlock.furcht);
         else
             FollowByName(fs.playerControlled);
         end
@@ -103,17 +103,17 @@ function warlock.secondaryAction()
         ClearTarget();
         AssistByName(fs.playerControlled);
         if UnitCanAttack("player", "target") then
-            if IsActionInRange(warlock.slt_feuerbrand) == 1 then
-                CastSpellByName(warlock.furcht);
+            if IsActionInRange(fs.warlock.slt_feuerbrand) == 1 then
+                CastSpellByName(fs.warlock.furcht);
             end
         else
-            CastSpellByName(warlock.summonMount);
+            CastSpellByName(fs.warlock.summonMount);
         end
     end
 
 end
 
-function warlock.tertiaryAction()
+function fs.warlock.tertiaryAction()
     fs.printDebug("warlock.tertiaryAction");
 
 end

@@ -1,12 +1,12 @@
 
-function druide.primaryAction()
+function fs.druide.primaryAction()
     fs.printDebug("druide.primaryAction()");
 end
 
-function druide.secondaryAction()
+function fs.druide.secondaryAction()
     fs.printDebug("druide.secondaryAction()");
 end
 
-function druide.tertiaryAction()
+function fs.druide.tertiaryAction()
     fs.printDebug("druide.tertiaryAction()");
 end
