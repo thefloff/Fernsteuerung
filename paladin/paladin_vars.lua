@@ -1,4 +1,5 @@
 fs.paladin = {
+	["rangeCheckSpell"] = "Lichtblitz(Rang 1)",
 	["healSpells"] = {
 		["Handauflegung(Rang 3)"] = {
 			["spellID"] = nil,
@@ -13,6 +14,20 @@ fs.paladin = {
 			["healPerMana"] = 3,
 			["normalizedManaEfficency"] = nil,
 			["normalizedCastTime"] = nil
+		},
+		["Lichtblitz(Rang 1)"] = {
+			["spellID"] = nil,
+			["name"] = "Lichtblitz",
+			["rank"] = 1,
+			["casttime"] = 1.5,
+			["expectedHeal"] = nil,
+			["hottime"] = 0,
+			["expectedHotHeal"] = 0, 
+			["cooldown"] = 0,
+			["isGroupHeal"] = false,
+			["healPerMana"] = nil,
+			["normalizedManaEfficency"] = nil, 
+			["normalizedCastTime"] = nil 
 		},
 		["Heiliges Licht(Rang 1)"] = {
 			["spellID"] = nil,

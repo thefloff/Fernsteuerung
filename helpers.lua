@@ -257,7 +257,18 @@ function fs.boolToString(bool)
 	end
 end	
 
+function fs.containsValue(tab, val)
+	if val == nil then
+		return false
+	end
+    for index, value in ipairs(tab) do
+        if value[1] == val then
+            return true
+        end
+    end
 
+    return false
+end
 
 
 

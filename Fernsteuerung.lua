@@ -95,6 +95,7 @@ function fs.onEvent()
 				playerHealTable = fs.playerIncomingHeal[player];
 			end
 			playerHealTable[t] = {amount=amount};
+			--fs.printDebug("playerHealTable["..t.."]="..amount);
 		end
 	elseif event == "PLAYER_TARGET_CHANGED" then  -- use the first target change for initializing the heal lists. It cant be done on load, cause the TheoryCraft addon is not yet ready at this point.
 		if(fs[fs.characterClass] ~= nil and not fs.isHealListInit) then
