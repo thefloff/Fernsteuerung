@@ -262,7 +262,7 @@ function fs.containsValue(tab, val)
 		return false
 	end
     for index, value in ipairs(tab) do
-        if value[1] == val then
+        if value == val then
             return true
         end
     end
