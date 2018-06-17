@@ -63,11 +63,12 @@ function fs.load()
 	getglobal("ChatFrame1"):AddMessage("Loading Fernsteuerung");
 	fs.registerCombatLogParser();
 	this:RegisterEvent("CHAT_MSG_ADDON");
+	this:RegisterEvent("PLAYER_TARGET_CHANGED");
     fs.characterClass = fs.getNormalizedClassName(UnitClass("player"));
     getglobal("ChatFrame1"):AddMessage(" -- Character Class: "..fs.characterClass);
 end
 
-function fs.chatMessageEvent() 
+function fs.onEvent() 
 	if(event == "CHAT_MSG_ADDON" and arg1 == "Fernsteuerung") then
 		local message = arg2;
 		fs.printDebug("AddonChannelMessage="..message);
@@ -85,12 +86,70 @@ function fs.chatMessageEvent()
 		elseif messageType == "COMMAND" then
 			--todo
 		elseif messageType == "HEAL" then
-			--todo
+			local player = splitMessage[2];
+			local amount = splitMessage[3];
+			local t = splitMessage[4];
+			local playerHealTable = fs.playerIncomingHeal[player];
+			if playerHealTable == nil then 
+				fs.playerIncomingHeal[player] = {};
+				playerHealTable = fs.playerIncomingHeal[player];
+			end
+			playerHealTable[t] = {amount=amount};
 		end
+	elseif event == "PLAYER_TARGET_CHANGED" then  -- use the first target change for initializing the heal lists. It cant be done on load, cause the TheoryCraft addon is not yet ready at this point.
+		if(fs[fs.characterClass] ~= nil and not fs.isHealListInit) then
+			fs.printDebug("fs: fillSpellListAttributes");
+			fs.fillSpellListAttributes(fs[fs.characterClass].healSpells);
+			fs.isHealListInit = true;
+		end		
 	end
 end
 
-
+function fs.fillSpellListAttributes(spellList) 
+	if(spellList == nil) then
+		return;
+	end
+	-- fill spellID, expectedHeal and healPerMana
+	for i=1,300 do
+		local name, rank = GetSpellName(i, BOOKTYPE_SPELL);
+		if name == nil then break end;
+		for key, spell in pairs(spellList) do
+			if name == spell.name and rank == "Rang "..spell.rank then
+				if spell.spellID == nil then
+					spell.spellID = i;
+				end
+				if spell.expectedHeal == nil then
+					spell.expectedHeal = TheoryCraft_GetSpellDataByName(spell.name, spell.rank).averagehealnocrit;
+				end
+				if spell.expectedHotHeal == nil then
+					spell.expectedHotHeal = TheoryCraft_GetSpellDataByName(spell.name, spell.rank).hotheal;
+				end
+				if spell.healPerMana == nil then
+					if TheoryCraft_GetSpellDataByName(spell.name, spell.rank).withhothpm then
+						spell.healPerMana = TheoryCraft_GetSpellDataByName(spell.name, spell.rank).withhothpm;
+					elseif TheoryCraft_GetSpellDataByName(spell.name, spell.rank).hpm then
+						spell.healPerMana = TheoryCraft_GetSpellDataByName(spell.name, spell.rank).hpm;
+					else 
+						spell.healPerMana = (spell.expectedHeal + spell.expectedHotHeal) / TheoryCraft_GetSpellDataByName(spell.name, spell.rank).manacost;
+					end
+				end
+			end
+		end
+	end
+	
+	-- calc normalizedManaEfficency, normalizedCastTime
+	local bestManaEfficency = 0;
+	for key, spell in pairs(spellList) do
+		spell.normalizedCastTime = 1 - min(spell.casttime / 3, 1);
+		if spell.healPerMana > bestManaEfficency then
+			bestManaEfficency = spell.healPerMana;
+		end
+	end
+	for key, spell in pairs(spellList) do 
+		spell.normalizedManaEfficency = max(((spell.healPerMana - bestManaEfficency * 1 / 3) / (bestManaEfficency * 2 / 3)), 0);
+		fs.printDebug("Normalized <casttime> | <manaefficency>: "..key.." to "..spell.normalizedCastTime.." | "..spell.normalizedManaEfficency);
+	end
+end
 
 
 

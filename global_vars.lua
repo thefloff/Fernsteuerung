@@ -38,6 +38,7 @@ fs.markerNames = {
 
 -- Other --
 fs.debug = true;
+fs.isHealListInit = false;
 
 -- combat log events for reading out dmg
 fs.damageEventList = {
@@ -55,3 +56,5 @@ fs.damageEventList = {
 -- save how much dmg players get
 fs.playerDmg = {}
 
+-- saves incomingHeal heal the player will get
+fs.playerIncomingHeal = {}

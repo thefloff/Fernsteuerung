@@ -2,7 +2,7 @@
 ## Title-deDE: Fernsteuerung
 ## Author: Floff
 ## Version: 1.1
-## Dependencies: MobInfo2
+## Dependencies: MobInfo2, TheoryCraft
 ## SavedVariablesPerCharacter: playerControlled, debug
 
 libs\ParserLib-1.1\ParserLib.lua

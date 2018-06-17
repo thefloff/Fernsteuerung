@@ -89,13 +89,18 @@ function fs.getItemNames()
 	end
 end
 
--- return true if group in combat
+-- return true if at least on of party/raid is in combat
 function fs.groupInCombat()
 	if(UnitAffectingCombat("player") ~= nil) then
 		return true;
 	end
 	for i=1,4 do
 		if(UnitAffectingCombat("party"..i) ~= nil) then
+			return true;
+		end
+	end
+	for i=1,40 do
+		if(UnitAffectingCombat("raid"..i) ~= nil) then
 			return true;
 		end
 	end
@@ -244,7 +249,13 @@ function fs.getNormalizedClassName(className)
 	end
 end
 
-
+function fs.boolToString(bool) 
+	if bool then
+		return "true";
+	else 
+		return "false";
+	end
+end	
 
 
 

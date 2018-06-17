@@ -20,7 +20,7 @@
 				fs.load();
 			</OnLoad>
 			<OnEvent>
-				fs.chatMessageEvent() 
+				fs.onEvent() 
 			</OnEvent>
 		</Scripts>
 
