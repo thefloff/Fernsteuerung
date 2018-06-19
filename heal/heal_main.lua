@@ -66,8 +66,8 @@ function fs.heal.autoCastHealCombat()
 		if selectedSpellName ~= nil then
 			fs.printDebug("selectedSpell = "..selectedSpellName);
 			TargetUnit(selectedUnit);
-			CastSpellByName(selectedSpellName);
 			fs.heal.sendHealAddonMessage(selectedUnitName, selectedSpell.expectedHeal, selectedSpell.casttime, selectedSpell.expectedHotHeal, selectedSpell.hottime);
+			CastSpellByName(selectedSpellName);
 			return;
 		end 	
 	else 
@@ -84,14 +84,7 @@ function fs.heal.doDecurse(priority)
 end
 
 function fs.heal.sendHealAddonMessage(unitName, expectedHeal, casttime, expectedHotHeal, hottime) 
-	SendAddonMessage("Fernsteuerung", "HEAL:"..unitName..":"..expectedHeal..":"..(GetTime()+casttime), "RAID");
-	local hottimeLeft = hottime;
-	local i = 1;
-	while hottimeLeft > 0 do
-		SendAddonMessage("Fernsteuerung", "HEAL:"..unitName..":"..((expectedHotHeal / hottime) * 3)..":"..(GetTime() + 3 * i), "RAID");
-		i = i + 1;
-		hottimeLeft = hottimeLeft - 3;
-	end
+	fs.heal.actSpellCast = {unitName=unitName, expectedHeal=expectedHeal, casttime=casttime, expectedHotHeal=expectedHotHeal, hottime=hottime, t=nil};
 end
 
 function fs.heal.calcNormalizedHealAmmountOnPoint(spell, unit, unitName) 
@@ -224,11 +217,11 @@ function fs.heal.calcSecondsToDie(unit)
 	local avgDmg = fs.heal.getAvgDmgOnTarget(unitName);
 	local secondsToDie = hp / avgDmg;
 	local lastExpectedHealInTime = 0;
-	local expectedHealInTime = fs.heal.getExpectedHealUntilTime(unitName, secondsToDie);
+	local expectedHealInTime = fs.heal.getExpectedHealUntilTime(unitName, GetTime() + secondsToDie);
 	while expectedHealInTime > lastExpectedHealInTime do
 		secondsToDie = (hp + expectedHealInTime) / avgDmg;
 		lastExpectedHealInTime = expectedHealInTime;
-		expectedHealInTime = fs.heal.getExpectedHealUntilTime(unitName, secondsToDie);
+		expectedHealInTime = fs.heal.getExpectedHealUntilTime(unitName, GetTime() + secondsToDie);
 	end
 	return secondsToDie;
 end

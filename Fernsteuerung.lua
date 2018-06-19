@@ -71,7 +71,6 @@ end
 function fs.onEvent() 
 	if(event == "CHAT_MSG_ADDON" and arg1 == "Fernsteuerung") then
 		local message = arg2;
-		fs.printDebug("AddonChannelMessage="..message);
 		local splitMessage = fs.split(message, ':');
 		local messageType = splitMessage[1];
 		if messageType == "DMG" then 
@@ -84,6 +83,7 @@ function fs.onEvent()
 			end
 			victimDamageTable[GetTime()] = {amount=amount};
 		elseif messageType == "COMMAND" then
+			fs.printDebug("AddonChannelMessage="..message);
 			local player = splitMessage[2];
 			local spellName = splitMessage[3];
 			if player == UnitName("player") then
@@ -93,6 +93,7 @@ function fs.onEvent()
 				fs.command.targetName = splitMessage[4];
 			end
 		elseif messageType == "HEAL" then
+			fs.printDebug("AddonChannelMessage="..message);
 			local player = splitMessage[2];
 			local amount = splitMessage[3];
 			local t = splitMessage[4];
@@ -103,8 +104,65 @@ function fs.onEvent()
 			end
 			playerHealTable[t] = {amount=amount};
 			--fs.printDebug("playerHealTable["..t.."]="..amount);
-		elseif messageType == "STOPEDHEAL" then
-			--todo
+		elseif messageType == "STOPHEAL" then
+			fs.printDebug("AddonChannelMessage="..message);
+			local player = splitMessage[2];
+			local t = splitMessage[3];
+			local playerHealTable = fs.playerIncomingHeal[player];
+			if playerHealTable ~= nil then 
+				playerHealTable[t] = nil;
+			end
+		elseif messageType == "DELAYHEAL" then
+			fs.printDebug("AddonChannelMessage="..message);
+			local player = splitMessage[2];
+			local deltaT = splitMessage[3];
+			local t = splitMessage[4];
+			local playerHealTable = fs.playerIncomingHeal[player];
+			if playerHealTable ~= nil then 
+				playerHealTable[""..(t+deltaT)] = playerHealTable[t];
+				playerHealTable[t] = nil;
+			end			
+		end
+	elseif event == "CHAT_MSG_ADDON" and arg1 == UnitName("player").."_CastingBarStart" then
+		if fs.heal.actSpellCast ~= nil then
+			local unitName = fs.heal.actSpellCast.unitName;
+			local expectedHeal = fs.heal.actSpellCast.expectedHeal;
+			local casttime = fs.heal.actSpellCast.casttime;
+			local expectedHotHeal = fs.heal.actSpellCast.expectedHotHeal;
+			local hottime = fs.heal.actSpellCast.hottime;
+			local t = GetTime() + casttime;
+			fs.heal.actSpellCast.t = t;
+			SendAddonMessage("Fernsteuerung", "HEAL:"..unitName..":"..expectedHeal..":"..t, "RAID");
+			local hottimeLeft = hottime;
+			local i = 1;
+			while hottimeLeft > 0 do
+				SendAddonMessage("Fernsteuerung", "HEAL:"..unitName..":"..((expectedHotHeal / hottime) * 3)..":"..(t + 3 * i), "RAID");
+				i = i + 1;
+				hottimeLeft = hottimeLeft - 3;
+			end
+		end
+	elseif event == "CHAT_MSG_ADDON" and arg1 == UnitName("player").."_CastingBarStop" then
+		if fs.heal.actSpellCast ~= nil and fs.heal.actSpellCast.t ~= nil then
+			local unitName = fs.heal.actSpellCast.unitName;
+			local t = fs.heal.actSpellCast.t;
+			SendAddonMessage("Fernsteuerung", "STOPHEAL:"..unitName..":"..t, "RAID");
+			fs.heal.actSpellCast = nil;
+		end
+	elseif event == "CHAT_MSG_ADDON" and arg1 == UnitName("player").."_CastingBarDelay" then
+		if fs.heal.actSpellCast ~= nil then
+			local delayTime = tonumber(arg2);
+			local unitName = fs.heal.actSpellCast.unitName;
+			local hottime = fs.heal.actSpellCast.hottime;
+			local t = fs.heal.actSpellCast.t;
+			SendAddonMessage("Fernsteuerung", "DELAYHEAL:"..unitName..":"..delayTime..":"..t, "RAID");
+			fs.heal.actSpellCast.t = t + delayTime;
+			local hottimeLeft = hottime;
+			local i = 1;
+			while hottimeLeft > 0 do
+				SendAddonMessage("Fernsteuerung", "DELAYHEAL:"..unitName..":"..delayTime..":"..(t + 3 * i), "RAID");
+				i = i + 1;
+				hottimeLeft = hottimeLeft - 3;
+			end
 		end
 	elseif event == "PLAYER_TARGET_CHANGED" then  -- use the first target change for initializing the heal lists. It cant be done on load, cause the TheoryCraft addon is not yet ready at this point.
 		if(fs[fs.characterClass] ~= nil and not fs.isHealListInit) then

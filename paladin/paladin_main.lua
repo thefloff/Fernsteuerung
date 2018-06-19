@@ -64,8 +64,8 @@ function fs.paladin.combatHealHookWithTargetSelected(unit, unitName, secondsToDi
 	  and fs.getSpellManaCosts(hl8) + fs.getSpellManaCosts(dv) < UnitMana("player") then
 		CastSpellByName("Göttliche Gunst");
 		fs.printDebug("cast Göttliche Gunst");
-		fs.sendCastCommand(UnitName("player"), "Heiliges Licht(Rang 8)", unitName);
 		fs.heal.sendHealAddonMessage(unitName, hl8.expectedHeal*1.5, hl8.casttime, 0, 0);
+		fs.sendCastCommand(UnitName("player"), "Heiliges Licht(Rang 8)", unitName);
 		return true;
 	end
 	return false;

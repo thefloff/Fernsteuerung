@@ -21,3 +21,6 @@ fs.heal.decurseWhiteList = {
 		["priority"] = "low", -- possible values "low", "medium", "high"
 	}
 }
+
+-- actuall spell cast, set when a spell cast begins. Data used to send a HEAL, STOPHEAL or DELAYHEAL addon message
+fs.heal.actSpellCast = nil;

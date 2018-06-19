@@ -148,6 +148,14 @@ function fs.unitHasDebuff(debuffname, unit)
 	return false;
 end
 
+-- usefull for finding debuff names for decurse list
+function fs.printTargetDebuffs()
+	for i=1,40 do
+		local name = UnitDebuff("target", i);
+		getglobal("ChatFrame1"):AddMessage(name);
+	end
+end
+
 -- search for a target without any buff in the array
 function fs.selectNextTargetWithout(forbiddenBuffs, forbiddenMarks)
 	local found = 0;
