@@ -9,8 +9,9 @@
 	["hottime"] = 0,
 	["expectedHotHeal"] = 0,  -- autofill possible, should set to 0 when no hot effect is there. Note: Autofill is not working on pure hots.
 	["cooldown"] = 0,
-	["isGroupHeal"] = false,
 	["healPerMana"] = nil,  -- autofill possible
 	["normalizedManaEfficency"] = nil, -- autofill possible, value from 0 (inefficient) to 1 (efficient)
 	["normalizedCastTime"] = nil -- autofill possible, value from 0 (very slow spell) to 1 (instant)
+	["onlyCustomUse"] = true | false, -- determines if a spell is used generic autocast, or just under custom class wise conditions
+	["manacosts"] = 123,  -- as fallback when tc dont know the spell, just set in that case
 }

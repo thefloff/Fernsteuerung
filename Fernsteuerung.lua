@@ -96,17 +96,19 @@ function fs.onEvent()
 			end
 			playerHealTable[t] = {amount=amount};
 			--fs.printDebug("playerHealTable["..t.."]="..amount);
+		elseif messageType == "STOPEDHEAL" then
+			--todo
 		end
 	elseif event == "PLAYER_TARGET_CHANGED" then  -- use the first target change for initializing the heal lists. It cant be done on load, cause the TheoryCraft addon is not yet ready at this point.
 		if(fs[fs.characterClass] ~= nil and not fs.isHealListInit) then
-			fs.printDebug("fs: fillSpellListAttributes");
-			fs.fillSpellListAttributes(fs[fs.characterClass].healSpells);
+			fs.printDebug("fs: fillHealSpellListAttributes");
+			fs.fillHealSpellListAttributes(fs[fs.characterClass].healSpells);
 			fs.isHealListInit = true;
 		end		
 	end
 end
 
-function fs.fillSpellListAttributes(spellList) 
+function fs.fillHealSpellListAttributes(spellList) 
 	if(spellList == nil) then
 		return;
 	end
@@ -148,7 +150,7 @@ function fs.fillSpellListAttributes(spellList)
 	end
 	for key, spell in pairs(spellList) do 
 		spell.normalizedManaEfficency = max(((spell.healPerMana - bestManaEfficency * 1 / 3) / (bestManaEfficency * 2 / 3)), 0);
-		fs.printDebug("Normalized <casttime> | <manaefficency>: "..key.." to "..spell.normalizedCastTime.." | "..spell.normalizedManaEfficency);
+		fs.printDebug("Normalized: "..key.." to "..spell.normalizedCastTime.." | "..spell.normalizedManaEfficency);
 	end
 end
 

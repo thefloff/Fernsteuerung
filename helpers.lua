@@ -127,6 +127,27 @@ function fs.targetHasDebuff(debuffname)
 	return false;
 end
 
+function fs.unitHasBuff(buffname, unit)
+	for i=1,40 do
+		local name = UnitBuff(unit, i);
+		if(name == buffname) then
+			return true;
+		end
+	end
+	return false;
+end
+
+function fs.unitHasDebuff(debuffname, unit)
+	for i=1,40 do
+		local name = UnitDebuff(unit, i);
+		fs.printDebug(name);
+		if(name == debuffname) then
+			return true;
+		end
+	end
+	return false;
+end
+
 -- search for a target without any buff in the array
 function fs.selectNextTargetWithout(forbiddenBuffs, forbiddenMarks)
 	local found = 0;
@@ -270,7 +291,25 @@ function fs.containsValue(tab, val)
     return false
 end
 
+function fs.getRemainingSpellCooldown(spellId, spellCooldownTime)
+	if spellCooldownTime == 0 then
+		return 0;
+	end
+	local spellCastStartTime = GetSpellCooldown(spellId, BOOKTYPE_SPELL);
+	if spellCastStartTime > 0 then
+		return spellCooldownTime - (GetTime()-spellCastStartTime);
+	else
+		return 0;
+	end
+end
 
+function fs.getSpellManaCosts(spell)
+	if spell.manacosts ~= nil then
+		return spell.manacosts;
+	else 
+		return TheoryCraft_GetSpellDataByName(spell.name, spell.rank).basemanacost;
+	end
+end
 
 
 
