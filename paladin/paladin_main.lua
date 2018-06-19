@@ -25,8 +25,9 @@ function fs.paladin.combatHealHookHighPriority()
 	if UnitHealth("player") / UnitHealthMax("player") < 0.3 
 	  and fs.getRemainingSpellCooldown(bubble.spellID, bubble.cooldown) == 0 
 	  and not fs.unitHasDebuff(fs.paladin.vorahnungDebuff, "player") 
-	  and fs.getSpellManaCosts(bubble, bubble.rank) < UnitMana("player") then
+	  and fs.getSpellManaCosts(bubble) < UnitMana("player") then
 		CastSpellByName("Gottesschild(Rang 2)");
+		fs.printDebug("cast Gottesschild(Rang 2)");
 		return true;
 	end
 
@@ -34,8 +35,7 @@ function fs.paladin.combatHealHookHighPriority()
 end
 
 function fs.paladin.combatHealHookWithTargetSelected(unit, unitName, secondsToDie) 
-	local lostHP = fs.heal.calcLostHPUntil(unit, unitName, t);
-	if secondsToDie < 2 and UnitHealth(unit) / UnitHealthMax(unit) < 0.3 then
+	if secondsToDie < 2.5 and UnitHealth(unit) / UnitHealthMax(unit) < 0.3 then
 		local sds = fs.paladin.healSpells["Segen des Schutzes(Rang 3)"];
 		local loh = fs.paladin.healSpells["Handauflegung(Rang 3)"];
 		-- use sds?
@@ -44,23 +44,47 @@ function fs.paladin.combatHealHookWithTargetSelected(unit, unitName, secondsToDi
 		  and fs.getNormalizedClassName(UnitClass(unit)) ~= "warrior" then
 			TargetUnit(unit);
 			CastSpellByName("Segen des Schutzes(Rang 3)");
+			fs.printDebug("cast Segen des Schutzes(Rang 3)");
 			return true;
 		end 
 		-- use lay on hands?
 		if fs.heal.isHealSpellPossible(loh, unit) and UnitMana("player") < 250 then 
 			TargetUnit(unit);
 			CastSpellByName("Handauflegung(Rang 3)");
+			fs.printDebug("cast Handauflegung(Rang 3)");
 			return true;
 		end
 	end
 	-- use divine favor?
 	local dv = fs.paladin.healSpells["Göttliche Gunst"];
 	local hl8 = fs.paladin.healSpells["Heiliges Licht(Rang 8)"];
-	if hl8.expectedHeal * 1.5 < lostHP and secondsToDie > 3 
+	local lostHP = fs.heal.calcLostHPUntil(unit, unitName, 3);
+	if hl8.expectedHeal * 1.3 < lostHP and secondsToDie > 3 
 	  and fs.getRemainingSpellCooldown(dv.spellID, dv.cooldown) == 0
 	  and fs.getSpellManaCosts(hl8) + fs.getSpellManaCosts(dv) < UnitMana("player") then
-		-- todo
+		CastSpellByName("Göttliche Gunst");
+		fs.printDebug("cast Göttliche Gunst");
+		fs.sendCastCommand(UnitName("player"), "Heiliges Licht(Rang 8)", unitName);
+		fs.heal.sendHealAddonMessage(unitName, hl8.expectedHeal*1.5, hl8.casttime, 0, 0);
 		return true;
 	end
 	return false;
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

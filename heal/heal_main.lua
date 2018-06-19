@@ -1,5 +1,8 @@
 -- this method should be called by a binded key 
 function fs.heal.autoCastHeal() 
+	if fs.command ~= nil then
+		fs.doCommand();
+	end
 	if fs.groupInCombat() then
 		fs.heal.autoCastHealCombat();
 	else 
@@ -64,14 +67,7 @@ function fs.heal.autoCastHealCombat()
 			fs.printDebug("selectedSpell = "..selectedSpellName);
 			TargetUnit(selectedUnit);
 			CastSpellByName(selectedSpellName);
-			SendAddonMessage("Fernsteuerung", "HEAL:"..selectedUnitName..":"..selectedSpell.expectedHeal..":"..(GetTime()+selectedSpell.casttime), "RAID");
-			local hottimeLeft = selectedSpell.hottime;
-			local i = 1;
-			while hottimeLeft > 0 do
-				SendAddonMessage("Fernsteuerung", "HEAL:"..selectedUnitName..":"..((selectedSpell.expectedHotHeal / selectedSpell.hottime) * 3)..":"..(GetTime() + 3 * i), "RAID");
-				i = i + 1;
-				hottimeLeft = hottimeLeft - 3;
-			end
+			fs.heal.sendHealAddonMessage(selectedUnitName, selectedSpell.expectedHeal, selectedSpell.casttime, selectedSpell.expectedHotHeal, selectedSpell.hottime);
 			return;
 		end 	
 	else 
@@ -85,6 +81,17 @@ end
 function fs.heal.doDecurse(priority)
 	-- todo: check for decurse and return true if done
 	return false;
+end
+
+function fs.heal.sendHealAddonMessage(unitName, expectedHeal, casttime, expectedHotHeal, hottime) 
+	SendAddonMessage("Fernsteuerung", "HEAL:"..unitName..":"..expectedHeal..":"..(GetTime()+casttime), "RAID");
+	local hottimeLeft = hottime;
+	local i = 1;
+	while hottimeLeft > 0 do
+		SendAddonMessage("Fernsteuerung", "HEAL:"..unitName..":"..((expectedHotHeal / hottime) * 3)..":"..(GetTime() + 3 * i), "RAID");
+		i = i + 1;
+		hottimeLeft = hottimeLeft - 3;
+	end
 end
 
 function fs.heal.calcNormalizedHealAmmountOnPoint(spell, unit, unitName) 
@@ -140,9 +147,7 @@ function fs.heal.isHealSpellPossible(spell, targetUnit)
 	end
 	-- mana check
 	local mana = UnitMana("player");
-	if spell.manacosts ~= nil and spell.manacosts > mana then  -- fallback for cases when tc dont know the spell
-		return false;
-	elseif fs.getSpellManaCosts(spell) > mana then
+	if fs.getSpellManaCosts(spell) > mana then
 		return false;
 	end
 	-- range check 
@@ -261,7 +266,6 @@ function fs.heal.getExpectedHealUntilTime(player, t)
 	--fs.printDebug("ExpectedHeal on "..player..": "..expectedHeal);
 	return expectedHeal;
 end
-
 
 
 

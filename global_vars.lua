@@ -58,3 +58,6 @@ fs.playerDmg = {}
 
 -- saves incomingHeal heal the player will get
 fs.playerIncomingHeal = {}
+
+-- command from addon channel
+fs.command = nil;

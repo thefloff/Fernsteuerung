@@ -1,11 +1,11 @@
 fs.paladin = {
 	["rangeCheckSpell"] = "Lichtblitz(Rang 1)",
-	["vorahnungDebuff"] = "Interface\\Icons\\Spell_Holy_Remove_Curse",
+	["vorahnungDebuff"] = "Interface\\Icons\\Spell_Holy_RemoveCurse",
 	["healSpells"] = {	
 		["Göttliche Gunst"] = {
 			["spellID"] = nil,
 			["name"] = "Göttliche Gunst",
-			["rank"] = 1,
+			["rank"] = nil,
 			["casttime"] = 0,
 			["expectedHeal"] = 0,
 			["hottime"] = 0,
@@ -63,7 +63,8 @@ fs.paladin = {
 			["healPerMana"] = 0,
 			["normalizedManaEfficency"] = nil,
 			["normalizedCastTime"] = nil,
-			["onlyCustomUse"] = true
+			["onlyCustomUse"] = true,
+			["manacosts"] = 0,
 		},
 		["Lichtblitz(Rang 1)"] = {
 			["spellID"] = nil,

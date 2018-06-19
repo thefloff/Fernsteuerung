@@ -84,7 +84,14 @@ function fs.onEvent()
 			end
 			victimDamageTable[GetTime()] = {amount=amount};
 		elseif messageType == "COMMAND" then
-			--todo
+			local player = splitMessage[2];
+			local spellName = splitMessage[3];
+			if player == UnitName("player") then
+				fs.command = {spellName=spellName, t=GetTime()};
+			end
+			if splitMessage[4] ~= nil then
+				fs.command.targetName = splitMessage[4];
+			end
 		elseif messageType == "HEAL" then
 			local player = splitMessage[2];
 			local amount = splitMessage[3];
@@ -108,6 +115,29 @@ function fs.onEvent()
 	end
 end
 
+-- sends a cast command to a player.
+-- commandTargetName - name of the player which should use the spell
+-- fullSpellName - full spell name (with rank) to use
+-- spellTargetName - name of the unit to target for this spell. Optional. Can be "ASSIST", then the target will be the target of the fs.playerControlled.
+function fs.sendCastCommand(commandTargetName, fullSpellName, spellTargetName)
+	SendAddonMessage("Fernsteuerung", "COMMAND:"..commandTargetName..":"..fullSpellName..":"..spellTargetName, "RAID");
+end
+
+function fs.doCommand() 
+	if GetTime() - fs.command.t < 5 then
+		if fs.command.targetName ~= nil then
+			if fs.command.targetName == "ASSIST" then
+				AssistByName(fs.playerControlled);
+			else
+				TargetByName(fs.command.targetName);
+			end
+		end
+		CastSpellByName(fs.command.spellName);
+	end
+	fs.command = nil;
+end	
+
+
 function fs.fillHealSpellListAttributes(spellList) 
 	if(spellList == nil) then
 		return;
@@ -117,8 +147,8 @@ function fs.fillHealSpellListAttributes(spellList)
 		local name, rank = GetSpellName(i, BOOKTYPE_SPELL);
 		if name == nil then break end;
 		for key, spell in pairs(spellList) do
-			if name == spell.name and rank == "Rang "..spell.rank then
-				if spell.spellID == nil then
+			if name == spell.name and (spell.rank == nil or rank == "Rang "..spell.rank) then
+				if spell.spellID == nil then					
 					spell.spellID = i;
 				end
 				if spell.expectedHeal == nil then
