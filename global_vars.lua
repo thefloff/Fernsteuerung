@@ -9,7 +9,7 @@ BINDING_NAME_FS_MENU = "Show Menu";
 
 -- Icons relevant for all classes --
 fs.ico_drink = "Interface\\Icons\\INV_Drink_18";
-fs.ico_eat = "Interface\\Icons\\INV_Misc_Food_33";
+fs.ico_eat = "Interface\\Icons\\INV_Misc_Food_73CinnamonRoll";
 
 -- Characters --
 fs.playerControlled = "Insert Player Character Name here!";
