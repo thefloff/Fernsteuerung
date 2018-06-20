@@ -334,7 +334,7 @@ function fs.getSpellList(list)
 		local spell = {};
 
 		if data then
-			spell.manaCost = data.basemanacost;
+			spell.manacost = data.basemanacost;
 		end
 
 		spell.id = i;
