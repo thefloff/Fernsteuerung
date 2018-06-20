@@ -1,18 +1,18 @@
 -- bound to keys
 function fs.primaryAction()
 	fs.printDebug("fs.primaryAction");
-    if fs.playerControlled == "None" then fs.playerControlled = playerControlled; end
+    if fs.playerControlled == "Insert Player Character Name here!" then fs.playerControlled = playerControlled; end
     if fs.playerControlled == nil then fs.printError("ERROR: No Character set to support!"); end
     fs[fs.characterClass].primaryAction()
 end
 function fs.secondaryAction()
-    if fs.playerControlled == "None" then fs.playerControlled = playerControlled; end
+    if fs.playerControlled == "Insert Player Character Name here!" then fs.playerControlled = playerControlled; end
     if fs.playerControlled == nil then fs.printError("ERROR: No Character set to support!"); end
     fs.printDebug("fs.secondaryAction");
     fs[fs.characterClass].secondaryAction();
 end
 function fs.tertiaryAction()
-    if fs.playerControlled == "None" then fs.playerControlled = playerControlled; end
+    if fs.playerControlled == "Insert Player Character Name here!" then fs.playerControlled = playerControlled; end
     if fs.playerControlled == nil then fs.printError("ERROR: No Character set to support!"); end
     fs.printDebug("fs.tertiaryAction");
     fs[fs.characterClass].tertiaryAction();
