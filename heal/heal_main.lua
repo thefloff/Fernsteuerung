@@ -135,7 +135,7 @@ end
 
 function fs.heal.isHealSpellPossible(spell, targetUnit)
 	-- cd check
-	if fs.getRemainingSpellCooldown(spell.spellID, spell.cooldown) > 0 then
+	if fs.getRemainingSpellCooldown(spell.spellID) > 0 then
 		return false;
 	end
 	-- mana check

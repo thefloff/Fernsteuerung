@@ -23,7 +23,7 @@ function fs.paladin.combatHealHookHighPriority()
 	local bubble = fs.paladin.healSpells["Gottesschild(Rang 2)"];
 	-- use bubble?
 	if UnitHealth("player") / UnitHealthMax("player") < 0.3 
-	  and fs.getRemainingSpellCooldown(bubble.spellID, bubble.cooldown) == 0 
+	  and fs.getRemainingSpellCooldown(bubble.spellID) == 0
 	  and not fs.unitHasDebuff(fs.paladin.vorahnungDebuff, "player") 
 	  and fs.getSpellManaCosts(bubble) < UnitMana("player") then
 		CastSpellByName("Gottesschild(Rang 2)");
@@ -60,7 +60,7 @@ function fs.paladin.combatHealHookWithTargetSelected(unit, unitName, secondsToDi
 	local hl8 = fs.paladin.healSpells["Heiliges Licht(Rang 8)"];
 	local lostHP = fs.heal.calcLostHPUntil(unit, unitName, 3);
 	if hl8.expectedHeal * 1.3 < lostHP and secondsToDie > 3 
-	  and fs.getRemainingSpellCooldown(dv.spellID, dv.cooldown) == 0
+	  and fs.getRemainingSpellCooldown(dv.spellID) == 0
 	  and fs.getSpellManaCosts(hl8) + fs.getSpellManaCosts(dv) < UnitMana("player") then
 		CastSpellByName("Göttliche Gunst");
 		fs.printDebug("cast Göttliche Gunst");

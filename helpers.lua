@@ -299,13 +299,10 @@ function fs.containsValue(tab, val)
     return false
 end
 
-function fs.getRemainingSpellCooldown(spellId, spellCooldownTime)
-	if spellCooldownTime == 0 then
-		return 0;
-	end
-	local spellCastStartTime = GetSpellCooldown(spellId, BOOKTYPE_SPELL);
-	if spellCastStartTime > 0 then
-		return spellCooldownTime - (GetTime()-spellCastStartTime);
+function fs.getRemainingSpellCooldown(spellId)
+	local start, duration = GetSpellCooldown(spellId, BOOKTYPE_SPELL);
+	if (start > 0 and duration > 0) then
+		return start + duration - GetTime();
 	else
 		return 0;
 	end
