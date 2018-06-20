@@ -319,10 +319,41 @@ function fs.getSpellManaCosts(spell)
 	end
 end
 
+-- collects some data of all spells
+function fs.getSpellList(list)
+	fs.printDebug("fs.getSpellList()");
+	for i=1,300 do
+		local name, rank = GetSpellName(i, BOOKTYPE_SPELL);
+		if name == nil then break end;
 
+		if string.find(rank, "Rang") or string.find(rank, "Rank") then
+			rank = string.sub(rank, -1);
+		else
+			rank = "0";
+		end
 
+		local data = TheoryCraft_GetSpellDataByName(name, rank);
 
+		local spell = {};
 
+		if data then
+			spell.manaCost = data.basemanacost;
+		end
+
+		spell.id = i;
+		spell.name = name;
+		spell.rank = rank;
+
+		if not list[name] then
+			list[name] = {};
+			list[name].maxRank = 0;
+		end
+		list[name][rank] = spell;
+		if tonumber(rank) > tonumber(list[name].maxRank) then
+			list[name].maxRank = rank;
+		end
+	end
+end
 
 
 

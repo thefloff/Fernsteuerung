@@ -1,6 +1,9 @@
 fs.warlock = {};
 
 fs.warlock.lastElemBuff = 0;
+fs.warlock.spellListLoaded = false;
+
+fs.warlock.spellList = {};
 
 fs.warlock.dot_fluchDerPein = "Interface\\Icons\\Spell_Shadow_CurseOfSargeras";
 fs.warlock.dot_verderbnis = "Interface\\Icons\\Spell_Shadow_AbominationExplosion";

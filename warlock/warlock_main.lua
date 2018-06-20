@@ -2,6 +2,11 @@
 function fs.warlock.primaryAction()
     fs.printDebug("warlock.primaryAction");
 
+    if not fs.warlock.spellListLoaded then
+        fs.getSpellList(fs.warlock.spellList);
+        fs.warlock.spellListLoaded = true;
+    end
+
     local enemyHealth = UnitHealth("target") / UnitHealthMax("target");
     if (enemyHealth == 0.0) then
         fs.printDebug("Target dead, clearing target");
@@ -89,6 +94,11 @@ end
 
 function fs.warlock.secondaryAction()
     fs.printDebug("warlock.secondaryAction");
+
+    if not fs.warlock.spellListLoaded then
+        fs.getSpellList(fs.warlock.spellList);
+        fs.warlock.spellListLoaded = true;
+    end
 
     -- in combat fear
     if fs.groupInCombat() then
