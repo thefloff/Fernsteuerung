@@ -140,7 +140,7 @@ function fs.heal.isHealSpellPossible(spell, targetUnit)
 	end
 	-- mana check
 	local mana = UnitMana("player");
-	if fs.getSpellManaCosts(spell) > mana then
+	if fs.getSpellManaCost(spell) > mana then
 		return false;
 	end
 	-- range check 

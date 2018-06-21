@@ -308,11 +308,17 @@ function fs.getRemainingSpellCooldown(spellId)
 	end
 end
 
-function fs.getSpellManaCosts(spell)
+function fs.getSpellManaCost(spell)
 	if spell.manacosts ~= nil then
 		return spell.manacosts;
-	else 
-		return TheoryCraft_GetSpellDataByName(spell.name, spell.rank).basemanacost;
+	else
+		local data = TheoryCraft_GetSpellDataByName(spell.name, spell.rank);
+		if data then
+			spell.manacosts = data.basemanacost;
+			return spell.manacosts;
+		else
+			return -1;
+		end
 	end
 end
 
@@ -334,7 +340,7 @@ function fs.getSpellList(list)
 		local spell = {};
 
 		if data then
-			spell.manacost = data.basemanacost;
+			spell.manacosts = data.basemanacost;
 		end
 
 		spell.id = i;
