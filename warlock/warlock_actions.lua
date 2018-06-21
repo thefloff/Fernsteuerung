@@ -1,8 +1,10 @@
 
 function fs.warlock.checkHealthInCombat()
 	local health = UnitHealth("player") / UnitHealthMax("player");
+	local mana = UnitMana("player");
 	if health < 0.3 then
-		if GetActionCooldown(fs.warlock.slt_todesmantel) == 0 then
+		if fs.getRemainingSpellCooldown(fs.warlock.maxSpell(fs.warlock.todesmantel).id) == 0 and
+			fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.todesmantel)) <= mana then
 			CastSpellByName(fs.warlock.todesmantel);
 			return true;
 		elseif fs.findItem(fs.warlock.ico_healthstone) then
@@ -10,7 +12,8 @@ function fs.warlock.checkHealthInCombat()
 			return true;
 		elseif UnitCanAttack("player", "target") and
 				UnitAffectingCombat("target") and
-				IsActionInRange(1) == 1 then
+				IsActionInRange(fs.warlock.getSpellSlot(fs.warlock.blutsauger)) == 1 and
+				fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.blutsauger)) <= mana then
 			CastSpellByName(fs.warlock.blutsauger);
 			return true;
 		else
@@ -22,8 +25,8 @@ function fs.warlock.checkHealthInCombat()
 end
 
 function fs.warlock.elem_debuff()
-	local mana = UnitMana("player") / UnitManaMax("player");
-	if mana < 0.1 then
+	local mana = UnitMana("player");
+	if mana < fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.fluchDerElemente)) then
 		return false;
 	end
 	if not (fs.playerControlled == "Eulepides") then
@@ -55,8 +58,8 @@ function fs.warlock.elem_debuff()
 end
 
 function fs.warlock.cast_seelendieb()
-	local mana = UnitMana("player") / UnitManaMax("player");
-	if mana < 0.1 then
+	local mana = UnitMana("player");
+	if mana < fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.seelendieb)) then
 		return false;
 	end
 	local enemyHealth = UnitHealth("target") / UnitHealthMax("target");
@@ -69,12 +72,11 @@ function fs.warlock.cast_seelendieb()
 end
 
 function fs.warlock.instant_damage()
-	local mana = UnitMana("player") / UnitManaMax("player");
-	if mana < 0.1 then
-		return false;
-	end
+	local mana = UnitMana("player");
 	local nrShards = fs.countItems(fs.warlock.ico_seelensplitter);
-	if nrShards > 5 and GetActionCooldown(fs.warlock.slt_schattenbrand) == 0 then
+	if nrShards > 5 and
+		fs.getRemainingSpellCooldown(fs.warlock.maxSpell(fs.warlock.schattenbrand).id) == 0 and
+		fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.schattenbrand)) <= mana then
 		CastSpellByName(fs.warlock.schattenbrand);
 		return true;
 	end
@@ -97,28 +99,30 @@ function fs.warlock.dots_relevant()
 end
 
 function fs.warlock.dot_inst()
-	local mana = UnitMana("player") / UnitManaMax("player");
-	if IsActionInRange(fs.warlock.slt_feuerbrand) == 1 then
+	local mana = UnitMana("player");
+	if IsActionInRange(fs.warlock.getSpellSlot(fs.warlock.fluchDerPein)) == 1 then
 		fs.printDebug(" -- am in range, will dot!");
 		PetAttack();
 		-- dot
 		if not fs.targetHasDebuff(fs.warlock.dot_fluchDerPein)
 			and not fs.targetHasDebuff(fs.warlock.debuff_fde) then
 			fs.printDebug(" -- Fluch der Pein");
-			if GetActionCooldown(fs.warlock.slt_fluchVerstaerken) == 0 then
+			if fs.getRemainingSpellCooldown(fs.warlock.maxSpell(fs.warlock.fluchVerstaerken).id) == 0 and
+				fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.fluchVerstaerken)) <= mana then
 				fs.printDebug(" -- -- verstärken");
 				CastSpellByName(fs.warlock.fluchVerstaerken);
 				return true;
-			else
+			elseif fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.fluchDerPein)) <= mana then
 				fs.printDebug(" -- -- casten");
 				CastSpellByName(fs.warlock.fluchDerPein);
 				return true;
 			end
-		elseif not fs.targetHasDebuff(fs.warlock.dot_verderbnis) then
+		elseif not fs.targetHasDebuff(fs.warlock.dot_verderbnis) and
+			fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.verderbnis)) <= mana then
 			fs.printDebug(" -- Verderbnis");
 			CastSpellByName(fs.warlock.verderbnis);
 			return true;
-		elseif mana > 0.5 and not fs.targetHasDebuff(fs.warlock.dot_lebensentzug) then
+		elseif mana > 2000 and not fs.targetHasDebuff(fs.warlock.dot_lebensentzug) then
 			fs.printDebug(" -- Lebensentzug");
 			CastSpellByName(fs.warlock.lebensentzug);
 			return true;
@@ -134,13 +138,14 @@ function fs.warlock.dot_inst()
 end
 
 function fs.warlock.dot_cast()
-	local mana = UnitMana("player") / UnitManaMax("player");
-	if mana < 0.2 then
+	local mana = UnitMana("player");
+	if mana < 2000 then
 		return false;
 	end
-	if IsActionInRange(fs.warlock.slt_feuerbrand) == 1 then
+	if IsActionInRange(fs.warlock.getSpellSlot(fs.warlock.feuerbrand)) == 1 then
 		PetAttack();
-		if not fs.targetHasDebuff(fs.warlock.dot_feuerbrand) then
+		if not fs.targetHasDebuff(fs.warlock.dot_feuerbrand) and
+			fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.feuerbrand)) <= mana then
 			CastSpellByName(fs.warlock.feuerbrand);
 			return true;
 		end
@@ -152,24 +157,28 @@ function fs.warlock.dot_cast()
 end
 
 function fs.warlock.do_damage()
-	if IsActionInRange(1) == 1 then
+	if IsActionInRange(fs.warlock.getSpellSlot(fs.warlock.schattenblitz)) == 1 then
 		PetAttack();
-		local mana = UnitMana("player") / UnitManaMax("player");
+		local mana = UnitMana("player");
 		local enemyMana = UnitMana("target");
-		if mana > 0.2 then
+		if mana > 1000 then
 			local nrShards = fs.countItems(fs.warlock.seelensplitter);
-			if nrShards > 5 and GetActionCooldown(fs.warlock.slt_seelenfeuer) == 0 then
+			if nrShards > 5 and
+				fs.getRemainingSpellCooldown(fs.warlock.maxSpell(fs.warlock.seelenfeuer).id) == 0 and
+				fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.seelenfeuer)) <= mana then
 				CastSpellByName(fs.warlock.seelenfeuer);
 				return true;
-			else
+			elseif fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.schattenblitz)) <= mana then
 				CastSpellByName(fs.warlock.schattenblitz);
 				return true;
 			end
-		elseif mana < 0.1 and enemyMana > 0.0 then
+		elseif mana < 1000 and
+			enemyMana > 0.0 and
+			fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.drainMana)) <= mana then
 			UseAction(fs.warlock.drainMana);
 			return true;
-		elseif not IsAutoRepeatAction(13) then
-			CastSpellByName("Schießen");
+		elseif not IsAutoRepeatAction(fs.warlock.getSpellSlot(fs.warlock.shoot)) then
+			CastSpellByName(fs.warlock.shoot);
 			return true;
 		end
 	else

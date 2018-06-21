@@ -84,7 +84,7 @@ function fs.warlock.primaryAction()
         AssistByName(fs.playerControlled);
         -- if selected enemy
         if UnitCanAttack("player", "target") then
-            fs.warlock.do_damage();
+            fs.warlock.dot_cast();
         else
             -- else do peaceful action
             fs.warlock.doPrimaryOOCAction();
@@ -113,7 +113,7 @@ function fs.warlock.secondaryAction()
         ClearTarget();
         AssistByName(fs.playerControlled);
         if UnitCanAttack("player", "target") then
-            if IsActionInRange(fs.warlock.slt_feuerbrand) == 1 then
+            if IsActionInRange(fs.warlock.getSpellSlot(fs.warlock.furcht)) == 1 then
                 CastSpellByName(fs.warlock.furcht);
             end
         else

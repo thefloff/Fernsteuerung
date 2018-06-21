@@ -346,6 +346,7 @@ function fs.getSpellList(list)
 		spell.id = i;
 		spell.name = name;
 		spell.rank = rank;
+		spell.texture = GetSpellTexture(spell.id, BOOKTYPE_SPELL);
 
 		if not list[name] then
 			list[name] = {};
@@ -358,6 +359,25 @@ function fs.getSpellList(list)
 	end
 end
 
+-- returns spell of maximum rank
+function fs.maxSpell(list, name)
+	fs.printDebug("fs.maxSpell()");
+	return list[name][list[name].maxRank];
+end
+
+-- find first slot of spell
+function fs.getSpellSlot(list, spellName)
+	fs.printDebug("fs.warlock.getSkillSlot()");
+	local shootTexture = fs.maxSpell(list, spellName).texture;
+	fs.printDebug(" -- looking for texture: "..shootTexture);
+	for i=1,5000 do
+		local texture = GetActionTexture(i);
+		if texture == shootTexture then
+			fs.printDebug(" -- shoot found at: "..i);
+			return i;
+		end
+	end
+end
 
 
 

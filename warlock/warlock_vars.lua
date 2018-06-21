@@ -5,6 +5,14 @@ fs.warlock.spellListLoaded = false;
 
 fs.warlock.spellList = {};
 
+function fs.warlock.maxSpell(name)
+    return fs.maxSpell(fs.warlock.spellList, name);
+end
+
+function fs.warlock.getSpellSlot(name)
+    return fs.getSpellSlot(fs.warlock.spellList, name);
+end
+
 fs.warlock.dot_fluchDerPein = "Interface\\Icons\\Spell_Shadow_CurseOfSargeras";
 fs.warlock.dot_verderbnis = "Interface\\Icons\\Spell_Shadow_AbominationExplosion";
 fs.warlock.dot_feuerbrand = "Interface\\Icons\\Spell_Fire_Immolation";
@@ -32,13 +40,7 @@ fs.warlock.todesmantel = "Todesmantel";
 fs.warlock.fluchDerElemente = "Fluch der Elemente";
 fs.warlock.schattenbrand = "Schattenbrand";
 fs.warlock.seelenfeuer = "Seelenfeuer";
-
-fs.warlock.slt_feuerbrand = 1;
-fs.warlock.slt_fluchVerstaerken = 5;
-fs.warlock.slt_zauberstab = 61;
-fs.warlock.slt_seelenfeuer = 64;
-fs.warlock.slt_schattenbrand = 65;
-fs.warlock.slt_todesmantel = 68;
+fs.warlock.shoot = "Schießen";
 
 fs.warlock.ico_healthstone = "Interface\\Icons\\INV_Stone_04";
 fs.warlock.ico_seelensplitter = "Interface\\Icons\\INV_Misc_Gem_Amethyst_02";
