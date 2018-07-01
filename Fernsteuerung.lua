@@ -88,9 +88,9 @@ function fs.onEvent()
 			local spellName = splitMessage[3];
 			if player == UnitName("player") then
 				fs.command = {spellName=spellName, t=GetTime()};
-			end
-			if splitMessage[4] ~= nil then
-				fs.command.targetName = splitMessage[4];
+				if splitMessage[4] ~= nil then
+					fs.command.targetName = splitMessage[4];
+				end
 			end
 		elseif messageType == "HEAL" then
 			fs.printDebug("AddonChannelMessage="..message);
