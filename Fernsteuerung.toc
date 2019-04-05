@@ -27,6 +27,10 @@ paladin\paladin_main.lua
 druid\druid_vars.lua
 druid\druid_main.lua
 
+mage\mage_vars.lua
+mage\mage_main.lua
+mage\mage_actions.lua;
+
 Fernsteuerung.lua
 
 Fernsteuerung.xml

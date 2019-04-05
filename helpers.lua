@@ -7,6 +7,7 @@ end
 
 -- use item in bag
 function fs.useItem(name)
+	fs.printDebug("using item: "..name);
 	local nrItems = {};
 	nrItems[0] = GetContainerNumSlots(0);
 	nrItems[1] = GetContainerNumSlots(1);
