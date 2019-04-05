@@ -1,8 +1,8 @@
-
 function fs.warlock.primaryAction()
     fs.printDebug("warlock.primaryAction");
 
     if not fs.warlock.spellListLoaded then
+		fs.printDebug("süelllist not loaded");
         fs.getSpellList(fs.warlock.spellList);
         fs.warlock.spellListLoaded = true;
     end
@@ -81,6 +81,7 @@ function fs.warlock.primaryAction()
 
     else
         -- if not active in combat, look at player target
+		fs.printDebug("not in combat");
         AssistByName(fs.playerControlled);
         -- if selected enemy
         if UnitCanAttack("player", "target") then

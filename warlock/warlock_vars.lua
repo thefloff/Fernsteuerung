@@ -19,6 +19,7 @@ fs.warlock.dot_feuerbrand = "Interface\\Icons\\Spell_Fire_Immolation";
 fs.warlock.dot_lebensentzug = "Interface\\Icons\\Spell_Shadow_Requiem";
 fs.warlock.buff_daemonenruestung = "Interface\\Icons\\Spell_Shadow_RagingScream";
 fs.warlock.debuff_sheep = "Interface\\Icons\\Spell_Nature_Polymorph";
+fs.warlock.debuff_pig = "Interface\\Icons\\Spell_Magic_PolymorphPig";
 fs.warlock.debuff_fde = "Interface\\Icons\\Spell_Shadow_ChillTouch";
 fs.warlock.debuff_fear = "Interface\\Icons\\Spell_Shadow_Possession";
 

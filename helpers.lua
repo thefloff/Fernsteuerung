@@ -221,7 +221,7 @@ end
 
 -- print error message to chat
 function fs.printError(msg)
-	getglobal("ChatFrame1"):AddMessage("\124cffFF0000"..msg);
+	getglobal("ChatFrame1"):AddMessage("\124cffFF0000ERROR: "..msg);
 end
 
 function fs.split(str, delim, maxNb)
@@ -317,6 +317,7 @@ function fs.getSpellManaCost(spell)
 			spell.manacosts = data.basemanacost;
 			return spell.manacosts;
 		else
+			fs.printError("Mana for Spell '"..spell.name.."' could not be found!");
 			return -1;
 		end
 	end

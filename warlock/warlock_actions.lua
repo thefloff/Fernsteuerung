@@ -17,7 +17,6 @@ function fs.warlock.checkHealthInCombat()
 			CastSpellByName(fs.warlock.blutsauger);
 			return true;
 		else
-			FollowByName(fs.playerControlled);
 			return true;
 		end
 	end
@@ -26,7 +25,7 @@ end
 
 function fs.warlock.elem_debuff()
 	local mana = UnitMana("player");
-	if mana < fs.getSpellManaCost(fs.warlock.maxSpell(fs.warlock.fluchDerElemente)) then
+	if mana < 500 then
 		return false;
 	end
 	if not (fs.playerControlled == "Eulepides") then
@@ -131,7 +130,6 @@ function fs.warlock.dot_inst()
 		return false;
 	else
 		fs.printDebug(" -- not in range, will follow");
-		FollowByName(fs.playerControlled);
 		return true;
 	end
 	return false;
@@ -150,7 +148,6 @@ function fs.warlock.dot_cast()
 			return true;
 		end
 	else
-		FollowByName(fs.playerControlled);
 		return true;
 	end
 	return false;
@@ -182,7 +179,6 @@ function fs.warlock.do_damage()
 			return true;
 		end
 	else
-		FollowByName(fs.playerControlled);
 		return true;
 	end
 	return false;
@@ -192,6 +188,7 @@ function fs.warlock.select_target_not_forbidden()
 	fs.printDebug("Selecting next not forbidden target");
 	local mark = GetRaidTargetIndex("target");
 	if not fs.targetHasDebuff(fs.warlock.debuff_sheep) and
+			not fs.targetHasDebuff(fs.warlock.debuff_pig) and
 			(not mark or fs.warlock.isAllowed[mark]) then
 		fs.printDebug(" -- target is good");
 		return false;
@@ -284,8 +281,10 @@ function fs.warlock.doPrimaryOOCAction()
 	local health = UnitHealth("player") / UnitHealthMax("player");
 
 	if fs.findItem(fs.warlock.ico_healthstone) == 0 and fs.findItem(fs.warlock.ico_seelensplitter) == 1 then
+		fs.printDebug("create healthstone");
 		CastSpellByName(fs.warlock.createHealthstone);
 	elseif not fs.playerHasBuff(fs.warlock.buff_daemonenruestung) then
+		fs.printDebug("daemonenrüstung");
 		CastSpellByName(fs.warlock.daemonenruestung);
 	elseif mana < 0.5 and health < 0.7 then
 		if fs.countItems(fs.ico_drink) > 0 and fs.countItems(fs.ico_eat) > 0 then
@@ -301,8 +300,10 @@ function fs.warlock.doPrimaryOOCAction()
 			fs.useItem(fs.ico_drink);
 		end
 	elseif fs.countItems(fs.warlock.seelensplitter) > 20 then
+		fs.printDebug("drop splitter");
 		fs.warlock.dropSplitter();
 	else
+		fs.printDebug("follow");
 		FollowByName(fs.playerControlled);
 	end
 end
